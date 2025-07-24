@@ -45,7 +45,7 @@ auto main(int argc, char* argv[]) -> int
             .text_color_hex2 = "#FFEA00",
             .sep_color_hex = "#FF7F50",
             .box_color_hex = "#7CFC00",
-            .error = 1};
+            .error = true};
         print_box(box_params);
         return 1;
     }
@@ -62,7 +62,7 @@ auto main(int argc, char* argv[]) -> int
                                    .text_color_hex2 = "#FFEA00",
                                    .sep_color_hex = "#FF7F50",
                                    .box_color_hex = "#7CFC00",
-                                   .error = 1};
+                                   .error = true};
         print_box(box_params);
         return 1;
     }
@@ -75,7 +75,7 @@ auto main(int argc, char* argv[]) -> int
                                    .text_color_hex2 = "#FFEA00",
                                    .sep_color_hex = "#FF7F50",
                                    .box_color_hex = "#7CFC00",
-                                   .error = 1};
+                                   .error = true};
         print_box(box_params);
         return 1;
     }
@@ -87,7 +87,7 @@ auto main(int argc, char* argv[]) -> int
                                .text_color_hex2 = "#FFEA00",
                                .sep_color_hex = "#FF69B4",
                                .box_color_hex = "#7CFC00",
-                               .error = 0};
+                               .error = false};
     print_box(box_params);
     const string text = encoded;
     clip::set_text(text);

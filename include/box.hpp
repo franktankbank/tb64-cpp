@@ -11,7 +11,7 @@ struct box
     std::string text_color_hex2;
     std::string sep_color_hex;
     std::string box_color_hex;
-    int error;
+    bool error;
 };
 
 void print_box(const struct box& box_params);
