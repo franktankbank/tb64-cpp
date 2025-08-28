@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.14)
 
 include(cmake/prelude.cmake)
+include(FetchContent)
+
+if(DEFINED ENV{VCPKG_ROOT})
+  set(VCPKG_ROOT "$ENV{VCPKG_ROOT}")
+  set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
+else()
+  message(FATAL_ERROR "vcpkg not found. Please set \'VCPKG_ROOT\'.")
+endif()
 
 project(
     tb64
@@ -9,13 +17,6 @@ project(
     HOMEPAGE_URL "https://github.com/franktankbank/tb64-cpp"
     LANGUAGES CXX
 )
-
-if(DEFINED ENV{VCPKG_ROOT})
-  set(VCPKG_ROOT "$ENV{VCPKG_ROOT}")
-  include(${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
-else()
-  message(FATAL_ERROR "vcpkg not found. Please set \'VCPKG_ROOT\'.")
-endif()
 
 include(cmake/project-is-top-level.cmake)
 include(cmake/variables.cmake)
@@ -26,8 +27,13 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
 set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
 
-# Add clip subdirectory to compile the library
-add_subdirectory(third_party/clip)
+FetchContent_Declare(
+  clip
+  GIT_REPOSITORY https://github.com/dacap/clip.git
+  GIT_TAG        7a60eabaad167d9dc91eae439cb2c1ab9d49c6ba # v1.10
+)
+
+FetchContent_MakeAvailable(clip)
 
 # ---- Declare executable ----
 
