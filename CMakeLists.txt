@@ -12,7 +12,7 @@ elseif(HOMEBREW)
   message(STATUS "Most likey being built as a homebrew formula")
   if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     message(FATAL_ERROR "HOMEBREW enabled, but this may not be running from homebrew.")
-  endif
+  endif()
 else()
   message(FATAL_ERROR "vcpkg not found. Please set \'VCPKG_ROOT\'.")
 endif()
