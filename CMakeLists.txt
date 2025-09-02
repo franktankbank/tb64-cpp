@@ -19,7 +19,7 @@ endif()
 
 project(
     tb64
-    VERSION 0.1.2
+    VERSION 0.1.3
     DESCRIPTION "A niche tool to encode text in base64 3 times. (cpp version)"
     HOMEPAGE_URL "https://github.com/franktankbank/tb64-cpp"
     LANGUAGES CXX
