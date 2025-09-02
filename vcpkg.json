@@ -1,6 +1,6 @@
 {
   "name": "tb64-cpp",
-  "version-semver": "0.1.3",
+  "version-semver": "0.1.4",
   "builtin-baseline": "d7112d1a4fb50410d3639f5f586972591d848beb",
   "dependencies": [
     "ms-gsl"
