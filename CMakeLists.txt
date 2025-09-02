@@ -3,11 +3,16 @@ cmake_minimum_required(VERSION 3.14)
 include(cmake/prelude.cmake)
 include(FetchContent)
 
+option(HOMEBREW "Building through homebrew" OFF)
+
 if(DEFINED ENV{VCPKG_ROOT})
   set(VCPKG_ROOT "$ENV{VCPKG_ROOT}")
   set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
-elseif(DEFINED VCPKG_ROOT)
-  set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
+elseif(HOMEBREW)
+  message(STATUS "Most likey being built as a homebrew formula")
+  if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    message(FATAL_ERROR "HOMEBREW enabled, but this may not be running from homebrew.")
+  endif
 else()
   message(FATAL_ERROR "vcpkg not found. Please set \'VCPKG_ROOT\'.")
 endif()
