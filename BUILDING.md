@@ -2,7 +2,8 @@
 
 ## Dependencies
 
-For a list of dependencies, please refer to [vcpkg.json](vcpkg.json).
+- [clip](https://github.com/dacap/clip) — MIT
+- [GSL](https://github.com/microsoft/GSL) — MIT
 
 ## Build
 

@@ -10,11 +10,7 @@
 #endif
 #include <base64.hpp>
 #include <box.hpp>
-#ifdef WITH_HOMEBREW
-#   include <clip.h>
-#else
-#   include <clip/clip.h>
-#endif
+#include <clip.h>
 #include <magic.hpp>
 
 using std::string;
