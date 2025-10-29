@@ -2,7 +2,7 @@
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.5-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/franktankbank/tb64/blob/main/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+    <img alt="License: GPL-3.0" src="https://img.shields.io/github/license/franktankbank/tb64-cpp" />
   </a>
 </p>
 
@@ -15,6 +15,7 @@ See the [BUILDING](BUILDING.md) document.
 ## Usage
 
 Encode a string
+
 ```sh
 tb64 abcd
 ```
@@ -30,4 +31,4 @@ Give a ⭐️ if this project helped you!
 ## 📝 License
 
 Copyright © 2025 [Frank Froggins](https://github.com/franktankbank).<br />
-This project is [MIT](https://github.com/franktankbank/tb64-cpp/blob/main/LICENSE) licensed.
+This project is [GPL-3.0](https://github.com/franktankbank/tb64-cpp/blob/main/LICENSE) licensed.
