@@ -36,6 +36,7 @@ else()
   set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
   set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
   set(CLIP_ENABLE_IMAGE OFF CACHE BOOL "Enables the support to copy/paste images")
+  set(CLIP_INSTALL OFF CACHE BOOL "Enable clip installation")
 
   include(FetchContent)
   FetchContent_Declare(
@@ -43,7 +44,16 @@ else()
     GIT_REPOSITORY https://github.com/dacap/clip.git
     GIT_TAG        7a60eabaad167d9dc91eae439cb2c1ab9d49c6ba # v1.10
   )
-  FetchContent_MakeAvailable(clip)
+  FetchContent_GetProperties(clip)
+  if(NOT clip_POPULATED)
+    FetchContent_Populate(clip)
+
+    # This gives you:
+    # - clip_SOURCE_DIR (path to source)
+    # - clip_BINARY_DIR (out-of-source build dir for it)
+
+    add_subdirectory(${clip_SOURCE_DIR} ${clip_BINARY_DIR})
+  endif()
 endif()
 
 # ---- Declare executable ----
@@ -74,6 +84,9 @@ target_compile_features(tb64_exe PRIVATE cxx_std_20)
 if(NOT CMAKE_SKIP_INSTALL_RULES)
   include(cmake/install-rules.cmake)
 endif()
+
+include("${CMAKE_SOURCE_DIR}/cmake/CPackConfig.cmake")
+include(CPack)
 
 # ---- Developer mode ----
 
