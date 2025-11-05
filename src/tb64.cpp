@@ -1,5 +1,3 @@
-#include <string>
-
 #include <gsl/span>
 #if defined __unix__ || __APPLE__
 #    include <sys/ioctl.h>
@@ -12,26 +10,16 @@
 #include <box.hpp>
 #include <clip.h>
 #include <magic.hpp>
+#include <turbob64.h>
 
 using std::string;
-
-namespace
-{
-auto triple_encode(const string& data) -> string
-{
-    string pass1 = base64::to_base64(data);
-    string pass2 = base64::to_base64(pass1);
-    string pass3 = base64::to_base64(pass2);
-    return pass3;
-}
-}  // namespace
 
 auto main(int argc, char* argv[]) -> int
 {
 #if defined __unix__ || __APPLE__
     struct winsize w;
     ioctl(fileno(stdout), TIOCGWINSZ, &w);
-    int width = (int)(w.ws_col) - 4;
+    int width = static_cast<int>(w.ws_col) - 4;
 #endif
 #ifdef _WIN32
     SetConsoleOutputCP(magic::codepage);
@@ -53,7 +41,7 @@ auto main(int argc, char* argv[]) -> int
     string data = args[1];
     string encoded = triple_encode(data);
 #if defined __unix__ || __APPLE__
-    int length = encoded.length() + 7 + 5;
+    size_t length = encoded.length() + magic::padding;
     if (length > width) {
         struct box box_params;
         box_params = (struct box) {.text1 = "Output Size Exceeded",

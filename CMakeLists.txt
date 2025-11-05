@@ -26,6 +26,17 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/dacap/clip.git
   GIT_TAG        7a60eabaad167d9dc91eae439cb2c1ab9d49c6ba # v1.10
 )
+
+# Declare turbo-base64 dependency
+FetchContent_Declare(
+  turbo_base64
+  GIT_REPOSITORY https://github.com/franktankbank/Turbo-Base64.git
+  GIT_TAG        master  # or a specific tag/commit for stability
+)
+
+# Download and make the target available
+FetchContent_MakeAvailable(turbo_base64)
+
 FetchContent_GetProperties(clip)
 if(NOT clip_POPULATED)
   FetchContent_Populate(clip)
@@ -39,13 +50,16 @@ endif()
 
 # ---- Declare executable ----
 
-add_executable(tb64_exe src/box.cpp src/tb64.cpp)
+add_executable(tb64_exe src/box.cpp src/tb64.cpp src/base64.cpp)
 add_executable(tb64::exe ALIAS tb64_exe)
 
 set_property(TARGET tb64_exe PROPERTY OUTPUT_NAME tb64)
 
 find_package(Microsoft.GSL CONFIG REQUIRED)
 target_link_libraries(tb64_exe PRIVATE Microsoft.GSL::GSL)
+
+target_include_directories(tb64_exe PRIVATE ${turbo_base64_SOURCE_DIR})
+target_link_libraries(tb64_exe PRIVATE base64)
 
 target_link_libraries(tb64_exe PRIVATE clip)
 target_include_directories(tb64_exe PRIVATE ${CMAKE_SOURCE_DIR}/include)

@@ -58,15 +58,13 @@ void print_box(const struct box& box_params)
         cerr << "\u2513" << reset << newline;  // Top-right corner
 
         // Middle line with text
-        cerr << "  " << box_color << "\u2503" << reset
-                << " ";  // Left border
-        cerr << text_color1 << box_params.text1
-                << reset;  // First part of text
+        cerr << "  " << box_color << "\u2503" << reset << " ";  // Left border
+        cerr << text_color1 << box_params.text1 << reset;  // First part of text
         cerr << " " << sep_color << "\u2192" << reset << " ";  // Separator
         cerr << text_color2 << box_params.text2
-                << reset;  // Second part of text
+             << reset;  // Second part of text
         cerr << " " << box_color << "\u2503" << reset
-                << newline;  // Right border
+             << newline;  // Right border
 
         // Bottom border
         cerr << "  " << box_color << "\u2517";  // Bottom-left corner
@@ -82,15 +80,13 @@ void print_box(const struct box& box_params)
         cout << "\u2513" << reset << newline;  // Top-right corner
 
         // Middle line with text
-        cout << "  " << box_color << "\u2503" << reset
-                << " ";  // Left border
-        cout << text_color1 << box_params.text1
-                << reset;  // First part of text
+        cout << "  " << box_color << "\u2503" << reset << " ";  // Left border
+        cout << text_color1 << box_params.text1 << reset;  // First part of text
         cout << " " << sep_color << "\u2192" << reset << " ";  // Separator
         cout << text_color2 << box_params.text2
-                << reset;  // Second part of text
+             << reset;  // Second part of text
         cout << " " << box_color << "\u2503" << reset
-                << newline;  // Right border
+             << newline;  // Right border
 
         // Bottom border
         cout << "  " << box_color << "\u2517";  // Bottom-left corner

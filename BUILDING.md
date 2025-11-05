@@ -4,6 +4,7 @@
 
 - [clip](https://github.com/dacap/clip) — MIT
 - [GSL](https://github.com/microsoft/GSL) — MIT
+- [Turbo-Base64 (fork)](https://github.com/franktankbank/Turbo-Base64) — GPL-3.0
 
 ## Build
 

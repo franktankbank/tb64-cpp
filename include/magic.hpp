@@ -12,6 +12,7 @@ constexpr unsigned int sixteen = 16;
 constexpr unsigned int five = 5;
 constexpr unsigned int codepage = 65001;
 constexpr unsigned int max_width = 64;
+constexpr unsigned int padding = 12;
 }  // namespace magic
 
 #endif
