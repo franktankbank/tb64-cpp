@@ -9,9 +9,6 @@ project(
     LANGUAGES CXX
 )
 
-include(cmake/project-is-top-level.cmake)
-include(cmake/variables.cmake)
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 # Disable clip examples, tests, and image support
@@ -74,16 +71,3 @@ endif()
 
 include("${CMAKE_SOURCE_DIR}/cmake/CPackConfig.cmake")
 include(CPack)
-
-# ---- Developer mode ----
-
-if(NOT tb64_DEVELOPER_MODE)
-  return()
-elseif(NOT PROJECT_IS_TOP_LEVEL)
-  message(
-      AUTHOR_WARNING
-      "Developer mode is intended for developers of tb64"
-  )
-endif()
-
-include(cmake/dev-mode.cmake)
