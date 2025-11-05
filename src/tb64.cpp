@@ -10,7 +10,11 @@
 #include <box.hpp>
 #include <clip.h>
 #include <magic.hpp>
-#include <turbob64.h>
+#ifdef WITH_HOMEBREW
+#    include <turbobase64/turbob64.h>
+#else
+#    include <turbob64.h>
+#endif
 
 using std::string;
 
