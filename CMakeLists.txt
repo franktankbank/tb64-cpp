@@ -37,17 +37,15 @@ else()
     GIT_TAG        master  # or a specific tag/commit for stability
   )
 
-  # Download and make the target available
-  FetchContent_MakeAvailable(turbo_base64)
+  FetchContent_GetProperties(turbo_base64)
+  if(NOT turbo_base64_POPULATED)
+    FetchContent_Populate(turbo_base64)
+    add_subdirectory(${turbo_base64_SOURCE_DIR} ${turbo_base64_BINARY_DIR} EXCLUDE_FROM_ALL)
+  endif()
 
   FetchContent_GetProperties(clip)
   if(NOT clip_POPULATED)
     FetchContent_Populate(clip)
-
-    # This gives you:
-    # - clip_SOURCE_DIR (path to source)
-    # - clip_BINARY_DIR (out-of-source build dir for it)
-
     add_subdirectory(${clip_SOURCE_DIR} ${clip_BINARY_DIR})
   endif()
 endif()
