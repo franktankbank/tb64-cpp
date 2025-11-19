@@ -28,6 +28,7 @@ else()
     clip
     GIT_REPOSITORY https://github.com/dacap/clip.git
     GIT_TAG        7a60eabaad167d9dc91eae439cb2c1ab9d49c6ba # v1.10
+    EXCLUDE_FROM_ALL
   )
 
   # Declare turbo-base64 dependency
@@ -35,19 +36,11 @@ else()
     turbo_base64
     GIT_REPOSITORY https://github.com/franktankbank/Turbo-Base64.git
     GIT_TAG        master  # or a specific tag/commit for stability
+    EXCLUDE_FROM_ALL
   )
 
-  FetchContent_GetProperties(turbo_base64)
-  if(NOT turbo_base64_POPULATED)
-    FetchContent_Populate(turbo_base64)
-    add_subdirectory(${turbo_base64_SOURCE_DIR} ${turbo_base64_BINARY_DIR} EXCLUDE_FROM_ALL)
-  endif()
-
-  FetchContent_GetProperties(clip)
-  if(NOT clip_POPULATED)
-    FetchContent_Populate(clip)
-    add_subdirectory(${clip_SOURCE_DIR} ${clip_BINARY_DIR})
-  endif()
+  FetchContent_MakeAvailable(turbo_base64)
+  FetchContent_MakeAvailable(clip)
 endif()
 
 # ---- Declare executable ----
