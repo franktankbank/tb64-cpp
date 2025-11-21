@@ -24,6 +24,8 @@ else()
   set(CLIP_INSTALL OFF CACHE BOOL "Enable clip installation")
 
   include(FetchContent)
+
+  # Declare clip dependency
   FetchContent_Declare(
     clip
     GIT_REPOSITORY https://github.com/dacap/clip.git
@@ -35,7 +37,7 @@ else()
   FetchContent_Declare(
     turbo_base64
     GIT_REPOSITORY https://github.com/franktankbank/Turbo-Base64.git
-    GIT_TAG        master  # or a specific tag/commit for stability
+    GIT_TAG        master  # master
     EXCLUDE_FROM_ALL
   )
 
