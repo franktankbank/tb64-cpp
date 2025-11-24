@@ -32,3 +32,5 @@ Give a ⭐️ if this project helped you!
 
 Copyright © 2025 [Frank Froggins](https://github.com/franktankbank).<br />
 This project is [GPL-3.0](LICENSE) licensed.
+
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for licenses and attribution related to third-party dependencies.
