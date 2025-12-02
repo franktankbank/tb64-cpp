@@ -1,0 +1,2 @@
+#pragma once
+constexpr auto tb64_version = "@TB64_VERSION@";

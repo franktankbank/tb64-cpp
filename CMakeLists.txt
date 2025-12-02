@@ -9,6 +9,22 @@ project(
     LANGUAGES CXX
 )
 
+find_package(Git)
+if (NOT GIT_FOUND)
+  message(FATAL_ERROR "Git is required by this project")
+endif(NOT GIT_FOUND)
+
+execute_process(
+  COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
+  RESULT_VARIABLE RESULT
+  OUTPUT_VARIABLE OUTPUT
+)
+string(REGEX MATCH "v[0-9].[0-9].[0-9]" LATEST_TAG "${OUTPUT}")
+string(REPLACE "\n" ""  LATEST_TAG "${LATEST_TAG}")
+string(REPLACE "v" ""  TB64_VERSION "${LATEST_TAG}")
+
+configure_file("include/version.h.in" "version.h" @ONLY)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 option(HOMEBREW "Building through homebrew" OFF)
@@ -18,11 +34,51 @@ if(HOMEBREW)
   option(TURBO_BASE64_ROOT "Turbo-Base64 root" "")
   option(CLI11_ROOT "CLI11 root" "")
 else()
-  # Disable clip examples, tests, and image support
-  set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
-  set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
-  set(CLIP_ENABLE_IMAGE OFF CACHE BOOL "Enables the support to copy/paste images")
-  set(CLIP_INSTALL OFF CACHE BOOL "Enable clip installation")
+  # Configure clip
+  set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples" FORCE)
+  set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests" FORCE)
+  set(CLIP_ENABLE_IMAGE OFF CACHE BOOL "Enables the support to copy/paste images" FORCE)
+  set(CLIP_INSTALL OFF CACHE BOOL "Enable clip installation" FORCE)
+  set_property(CACHE CLIP_EXAMPLES PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLIP_TESTS PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLIP_ENABLE_IMAGE PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLIP_INSTALL PROPERTY TYPE INTERNAL)
+
+  # Configure CLI11
+  set(BUILD_TESTING OFF CACHE BOOL "Build the testing tree." FORCE)
+  set(CLI11_BOOST OFF CACHE BOOL "Turn on boost test (currently may fail with Boost 1.70)" FORCE)
+  set(CLI11_BUILD_EXAMPLES OFF CACHE BOOL "Build CLI11 examples" FORCE)
+  set(CLI11_BUILD_EXAMPLES_JSON OFF CACHE BOOL "Build CLI11 json example" FORCE)
+  set(CLI11_BUILD_TESTS OFF CACHE BOOL "Build CLI11 tests" FORCE)
+  set(CLI11_CUDA_TESTS OFF CACHE BOOL "" FORCE)
+  set(CLI11_INSTALL OFF CACHE BOOL "Install the CLI11 folder to include during install process" FORCE)
+  set(CLI11_PRECOMPILED ON CACHE BOOL "" FORCE)
+  set(CLI11_SANITIZERS OFF CACHE BOOL "Download the sanitizers CMake config" FORCE)
+  set(CLI11_SINGLE_FILE OFF CACHE BOOL "Generate a single header file" FORCE)
+  set(CLI11_WARNINGS_AS_ERRORS OFF CACHE BOOL "Turn all warnings into errors (for CI)" FORCE)
+  set_property(CACHE BUILD_TESTING PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLI11_BOOST PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLI11_BUILD_EXAMPLES PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLI11_BUILD_EXAMPLES_JSON PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLI11_BUILD_TESTS PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLI11_CUDA_TESTS PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLI11_INSTALL PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLI11_PRECOMPILED PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLI11_SANITIZERS PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLI11_SINGLE_FILE PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLI11_WARNINGS_AS_ERRORS PROPERTY TYPE INTERNAL)
+
+  # Configure Turbo Base64
+  set(BUILD_APP OFF CACHE BOOL "Build executables" FORCE)
+  set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries" FORCE)
+  set(FULLCHECK OFF CACHE BOOL "Enable full base64 checking" FORCE)
+  set(NAVX512 OFF CACHE BOOL "Disable AVX512" FORCE)
+  set(NCHECK OFF CACHE BOOL "Disable checking for faster decoding" FORCE)
+  set_property(CACHE BUILD_APP PROPERTY TYPE INTERNAL)
+  set_property(CACHE BUILD_SHARED_LIBS PROPERTY TYPE INTERNAL)
+  set_property(CACHE FULLCHECK PROPERTY TYPE INTERNAL)
+  set_property(CACHE NAVX512 PROPERTY TYPE INTERNAL)
+  set_property(CACHE NCHECK PROPERTY TYPE INTERNAL)
 
   include(FetchContent)
 
@@ -87,6 +143,7 @@ endif()
 target_link_libraries(tb64_exe PRIVATE clip)
 target_link_libraries(tb64_exe PRIVATE base64)
 target_link_libraries(tb64_exe PRIVATE CLI11::CLI11)
+target_include_directories(tb64_exe PRIVATE ${CMAKE_BINARY_DIR})
 target_include_directories(tb64_exe PRIVATE ${CMAKE_SOURCE_DIR}/include)
 target_compile_features(tb64_exe PRIVATE cxx_std_20)
 
