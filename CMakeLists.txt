@@ -9,19 +9,24 @@ project(
     LANGUAGES CXX
 )
 
-find_package(Git)
-if (NOT GIT_FOUND)
-  message(FATAL_ERROR "Git is required by this project")
-endif(NOT GIT_FOUND)
-
-execute_process(
-  COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
-  RESULT_VARIABLE RESULT
-  OUTPUT_VARIABLE OUTPUT
-)
-string(REGEX MATCH "v[0-9].[0-9].[0-9]" LATEST_TAG "${OUTPUT}")
-string(REPLACE "\n" ""  LATEST_TAG "${LATEST_TAG}")
-string(REPLACE "v" ""  TB64_VERSION "${LATEST_TAG}")
+if(EXISTS "${CMAKE_SOURCE_DIR}/.git")
+  find_package(Git)
+  if (NOT GIT_FOUND)
+    message(FATAL_ERROR "Git is required by this project")
+  endif(NOT GIT_FOUND)
+  execute_process(
+    COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
+    RESULT_VARIABLE RESULT
+    OUTPUT_VARIABLE OUTPUT
+  )
+  string(REGEX MATCH "v[0-9].[0-9].[0-9]" LATEST_TAG "${OUTPUT}")
+  string(REPLACE "\n" ""  LATEST_TAG "${LATEST_TAG}")
+  string(REPLACE "v" ""  TB64_VERSION "${LATEST_TAG}")
+else()
+  file(READ "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" CONTENTS)
+  string(STRIP "${CONTENTS}" LATEST_TAG)
+  string(REPLACE "v" ""  TB64_VERSION "${LATEST_TAG}")
+endif()
 
 configure_file("include/version.h.in" "version.h" @ONLY)
 
@@ -32,7 +37,6 @@ option(HOMEBREW "Building through homebrew" OFF)
 if(HOMEBREW)
   option(CLIP_ROOT "Clip root" "")
   option(TURBO_BASE64_ROOT "Turbo-Base64 root" "")
-  option(CLI11_ROOT "CLI11 root" "")
 else()
   # Configure clip
   set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples" FORCE)
@@ -121,16 +125,18 @@ find_package(Microsoft.GSL CONFIG REQUIRED)
 target_link_libraries(tb64_exe PRIVATE Microsoft.GSL::GSL)
 
 if(HOMEBREW)
-  target_include_directories(tb64_exe PRIVATE ${TURBO_BASE64_ROOT}/include)
-  target_link_directories(tb64_exe PRIVATE ${TURBO_BASE64_ROOT}/lib)
-
   add_compile_definitions(WITH_HOMEBREW)
 
+  # cli11
+  find_package(CLI11 CONFIG REQUIRED)
+
+  # clip
   target_include_directories(tb64_exe PRIVATE ${CLIP_ROOT}/include)
   target_link_directories(tb64_exe PRIVATE ${CLIP_ROOT}/lib)
 
-  target_include_directories(tb64_exe PRIVATE ${CLI11_ROOT}/include)
-  target_link_directories(tb64_exe PRIVATE ${CLI11_ROOT}/lib)
+  # turbo-base64
+  target_include_directories(tb64_exe PRIVATE ${TURBO_BASE64_ROOT}/include)
+  target_link_directories(tb64_exe PRIVATE ${TURBO_BASE64_ROOT}/lib)
 
   if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     target_link_libraries(tb64_exe PRIVATE "-framework AppKit")
