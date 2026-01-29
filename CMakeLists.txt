@@ -43,10 +43,12 @@ else()
   set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests" FORCE)
   set(CLIP_ENABLE_IMAGE OFF CACHE BOOL "Enables the support to copy/paste images" FORCE)
   set(CLIP_INSTALL OFF CACHE BOOL "Enable clip installation" FORCE)
+  set(CLIP_X11_WITH_PNG OFF CACHE BOOL "Compile with libpng to support copy/paste image in png format" FORCE)
   set_property(CACHE CLIP_EXAMPLES PROPERTY TYPE INTERNAL)
   set_property(CACHE CLIP_TESTS PROPERTY TYPE INTERNAL)
   set_property(CACHE CLIP_ENABLE_IMAGE PROPERTY TYPE INTERNAL)
   set_property(CACHE CLIP_INSTALL PROPERTY TYPE INTERNAL)
+  set_property(CACHE CLIP_X11_WITH_PNG PROPERTY TYPE INTERNAL)
 
   # Configure CLI11
   set(BUILD_TESTING OFF CACHE BOOL "Build the testing tree." FORCE)
