@@ -27,7 +27,6 @@ set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set(CPACK_BINARY_DEB ON)
     set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
-    set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE amd64)
     set(CPACK_DEBIAN_PACKAGE_SECTION utils)
     # add set(CPACK_DEBIAN_PACKAGE_CONFLICTS <Insert Conflicting Packages Here>) when the other flavors of tb64 are packaged
 endif()
