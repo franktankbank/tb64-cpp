@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.14)
 include(cmake/prelude.cmake)
 
 project(
-    tb64
+    tb64-cpp
     DESCRIPTION "A niche tool to encode text in base64 3 times. (cpp version)"
     HOMEPAGE_URL "https://github.com/franktankbank/tb64-cpp"
     LANGUAGES CXX

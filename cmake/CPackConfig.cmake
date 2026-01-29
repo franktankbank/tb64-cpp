@@ -2,7 +2,7 @@
 
 # cmake/CPackConfig.cmake
 
-set(CPACK_PACKAGE_NAME "TB64")
+set(CPACK_PACKAGE_NAME "TB64-CPP")
 set(CPACK_THREADS 4)
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 set(CPACK_PACKAGE_CONTACT "pearlover912@gmail.com")
